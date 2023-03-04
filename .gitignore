@@ -1,0 +1,6 @@
+*.exe
+*.bat
+*.txt
+*.json
+\.vscode
+\__pycache__
