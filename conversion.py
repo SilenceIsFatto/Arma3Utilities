@@ -62,7 +62,7 @@ Subfolder: {subfolder[3]}\n----------------------------------------------"""
                             for i in range(5):
                                 processes.pop()
 
-                        print(processes)
+                        print(f"There are currently {len(processes)} processes active.")
 
                     except:
 

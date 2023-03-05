@@ -1,6 +1,10 @@
 import PySimpleGUI as gui
+
+# gui imports
 import gui_settings
 import gui_layouts
+import gui_debug
+
 import os
 import threading
 #import threads
@@ -11,16 +15,6 @@ def set_theme(theme):
 
     print(f"Theme was set to {theme}")
 
-def prompt_user_return(message):
-
-    data = gui.popup_get_text(message)
-
-    return data
-
-def prompt_user(title, message):
-
-    gui.popup(title, message)
-
 def prompt_debug():
 
     gui.show_debugger_window(location=(10,0))
@@ -30,16 +24,6 @@ def prompt_debug():
     print = gui.Print
 
 set_theme("Dark")
-
-def window_debug():
-
-    config = gui_layouts.Layouts()
-
-    layout_debug = config.layout_console()
-
-    # print(layout)
-
-    window_debug = gui.Window("Debug Window", layout_debug, size=(600, 300), element_justification='c', finalize=True)
 
 def window():
 
@@ -62,7 +46,7 @@ def window():
 def event_handlers(window):
 
     while True:
-        event, values = window.read(timeout=100)
+        window, event, values = gui.read_all_windows()
         # End program if user closes window or
         # presses the OK button
 
@@ -78,7 +62,13 @@ def event_handlers(window):
                 window.perform_long_operation(lambda : conversion.convert_textures("png", "paa"), "Converted Textures")
 
             case "settings":
-                gui_settings.select_tools()
+                gui_settings.window_settings_init()
+
+            case "path_to_tools":
+                select_tools()
+
+            case "open_debug_window":
+                gui_debug.window_debug()
 
             case gui.WIN_CLOSED:
                 break
@@ -125,7 +115,7 @@ def window_init():
 
     # prompt_debug()
 
-    window_b = window_debug()
+    # window_b = gui_debug.window_debug()
 
     window_a = window()
     event_handlers(window_a)
