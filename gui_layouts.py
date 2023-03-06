@@ -45,7 +45,11 @@ class Layouts:
             
             [gui.Button("PNG > PAA Mass Conversion", pad=(0,0), key="png_to_paa")],
 
-            [gui.Text("Config Tools", pad=(0,20))],
+            [gui.Text("PBO Tools", pad=(0,20))],
+
+            [gui.Button("Pack Directory", pad=(0,0), key="pack_pbo")],
+            
+            [gui.Button("Directory Settings", pad=(0,0), key="pack_pbo_settings")],
 
             [gui.Button("Settings", pad=(10,55), key="settings")],
         ]

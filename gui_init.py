@@ -5,9 +5,9 @@ import gui_settings
 import gui_layouts
 import gui_debug
 
+import directory
+
 import os
-import threading
-#import threads
 
 def set_theme(theme):
 
@@ -31,7 +31,7 @@ def window():
     
     layout = config.layout_base()
 
-    window = gui.Window("Arma 3 Utilities", layout, size=(400, 300), element_justification='c', finalize=True)
+    window = gui.Window("Arma 3 Utilities", layout, size=(500, 350), element_justification='c', finalize=True)
 
     # window.bring_to_front()
 
@@ -43,35 +43,57 @@ def window():
 #     match event:
 #         case "":
 
-def event_handlers(window):
+def event_handlers(window_a):
 
     while True:
         window, event, values = gui.read_all_windows()
+
+        # print(window)
         # End program if user closes window or
         # presses the OK button
 
+        if (window == window_a and event == gui.WIN_CLOSED):
+            break
+
         match event:
+            case gui.WIN_CLOSED:
+                window.close()
+
             case "paa_to_png":
                 import conversion
                 # threads.start_thread(conversion.convert_textures("paa", "png"), 10)
-                window.perform_long_operation(lambda : conversion.convert_textures("paa", "png"), "Converted Textures")
+                window.perform_long_operation(lambda : conversion.convert_textures("paa", "png"), "converted_textures")
 
             case "png_to_paa":
                 import conversion
                 # threads.start_thread(conversion.convert_textures("paa", "png"), 10)
-                window.perform_long_operation(lambda : conversion.convert_textures("png", "paa"), "Converted Textures")
+                window.perform_long_operation(lambda : conversion.convert_textures("png", "paa"), "converted_textures")
+
+            case "pack_pbo":
+                import packer
+                window.perform_long_operation(lambda : packer.pack_all_pbo(), "packed_pbo")
+
+            case "pack_pbo_settings":
+                in_path = directory.grab_directory()
+
+                out_path = directory.grab_directory()
+
+                x = {
+                    "in_path": in_path,
+                    "out_path": out_path,
+                }
+
+                gui_settings.save_to_json(x, "packer")
 
             case "settings":
                 gui_settings.window_settings_init()
+                print(str(window))
 
             case "path_to_tools":
                 select_tools()
 
             case "open_debug_window":
                 gui_debug.window_debug()
-
-            case gui.WIN_CLOSED:
-                break
 
         # if event == "Close":
         #     break
@@ -115,7 +137,7 @@ def window_init():
 
     # prompt_debug()
 
-    # window_b = gui_debug.window_debug()
+    window_b = gui_debug.window_debug()
 
     window_a = window()
     event_handlers(window_a)

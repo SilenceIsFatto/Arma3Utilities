@@ -4,10 +4,9 @@ import time
 import json
 
 import directory
-import threads
 import gui_settings
 
-tools = gui_settings.read_from_json()
+tools = gui_settings.read_from_json("settings")
 
 def convert_textures(file_type_from, file_type_to):
 
@@ -48,8 +47,6 @@ Subfolder: {subfolder[3]}\n----------------------------------------------"""
                     try:
 
                         path = tools["tools"]
-
-                        print(f"TexView2")
 
                         proc = subprocess.Popen([f"{path}\TexView2\Pal2PacE.exe", f"{dir_path}\\{file_name[:-4]}.{file_type_from}", f"{dir_path}\\{file_name[:-4]}.{file_type_to}"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                         processes.append(proc)
