@@ -45,9 +45,9 @@ def pack_all_pbo():
                 isFile = True
 
         if (isFile == False):
-            print((path_in, path_out))
+            print(f"There are currently {len(processes)} processes active.")
 
-            print(f"\033[1;32m{path_in}/{folder} was a folder, packing\n\n\n\n\n")
+            print(f"{path_in}/{folder} was a folder, packing\n\n\n\n\n")
             subprocess.Popen([f"{path}\AddonBuilder\AddonBuilder.exe", f"{path_in}/{folder}", path_out, "-clear", "-temp", "-binarizeNoLogs", f"-include={os.getcwd()}/include.txt"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT) # use the include.txt
         else:
             print(f"{path_in}/{folder} was not a folder, not packing\n\n\n\n\n")
@@ -57,5 +57,5 @@ def pack_all_pbo():
             time.sleep(3.7)
             for i in range(5):
                 processes.pop()
-
-        print(f"There are currently {len(processes)} processes active.")
+    
+    print("Finished Packing.")
