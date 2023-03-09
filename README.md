@@ -1,5 +1,5 @@
 # Arma3Utilities
-An arma 3 project utilising python (Using PySimpleGUI) aswell as arma 3 tools, mainly meant for batch work.
+An python project utilising PySimpleGUI aswell as arma 3 tools, mainly meant for batch work.
 
 You may need to:
 pip install PySimpleGUI
@@ -15,3 +15,5 @@ I acknowledge that a lot can be improved, but as it stands this project is made 
 You may ask, why use standard arma 3 tools for this project if they already work?
 
 Put simply, arma 3 tools are slow. Running them through python allows multiple processes at once, which improves time to completion. (Converting multiple .paa files to .png at once, for instance.)
+
+This is generally better when you are working on big projects. In my experience, it is much easier to have all of these tools linked in a central hub that interconnects with each other.
