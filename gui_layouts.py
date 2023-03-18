@@ -3,13 +3,25 @@ import PySimpleGUI as gui
 class Layouts:
 
     def __init__(self):
-        print(self)
+        print("Running")
 
     def layout_console(self):
         frame_layout = [[gui.Multiline("", size=(80, 20), autoscroll=True, reroute_stdout=True, reroute_stderr=True, key='console_output')]]
 
         layout = [
             [gui.Frame("Output console", frame_layout)]
+        ]
+
+        return layout
+
+    def layout_settings(self):
+
+        layout = [
+            [gui.Text("Settings")],
+
+            [gui.Button("Path To Arma 3 Tools", pad=(0,10), key="path_to_tools")],
+
+            [gui.Button("Open Debug Window", pad=(0,10), key="open_debug_window")],
         ]
 
         return layout
@@ -33,7 +45,11 @@ class Layouts:
             
             [gui.Button("PNG > PAA Mass Conversion", pad=(0,0), key="png_to_paa")],
 
-            [gui.Text("Config Tools", pad=(0,20))],
+            [gui.Text("PBO Tools", pad=(0,20))],
+
+            [gui.Button("Pack Directory", pad=(0,0), key="pack_pbo")],
+            
+            [gui.Button("Directory Settings", pad=(0,0), key="pack_pbo_settings")],
 
             [gui.Button("Settings", pad=(10,55), key="settings")],
         ]

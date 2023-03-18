@@ -4,10 +4,9 @@ import time
 import json
 
 import directory
-import threads
 import gui_settings
 
-tools = gui_settings.read_from_json()
+tools = gui_settings.read_from_json("settings")
 
 def convert_textures(file_type_from, file_type_to):
 
@@ -49,9 +48,9 @@ Subfolder: {subfolder[3]}\n----------------------------------------------"""
 
                         path = tools["tools"]
 
-                        print(f"TexView2")
-
-                        proc = subprocess.Popen([f"{path}\TexView2\Pal2PacE.exe", f"{dir_path}\\{file_name[:-4]}.{file_type_from}", f"{dir_path}\\{file_name[:-4]}.{file_type_to}"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                        proc = subprocess.Popen([f"{path}/TexView2/Pal2PacE.exe", f"{dir_path}/{file_name[:-4]}.{file_type_from}", f"{dir_path}/{file_name[:-4]}.{file_type_to}"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                        # print(f"{dir_path}/{file_name[:-4]}.{file_type_from}")
+                        # print(f"{dir_path}/{file_name[:-4]}.{file_type_to}")
                         processes.append(proc)
 
                         # state = proc.communicate()
@@ -62,7 +61,7 @@ Subfolder: {subfolder[3]}\n----------------------------------------------"""
                             for i in range(5):
                                 processes.pop()
 
-                        print(processes)
+                        print(f"There are currently {len(processes)} processes active.")
 
                     except:
 
