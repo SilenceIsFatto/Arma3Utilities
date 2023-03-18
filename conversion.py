@@ -48,7 +48,9 @@ Subfolder: {subfolder[3]}\n----------------------------------------------"""
 
                         path = tools["tools"]
 
-                        proc = subprocess.Popen([f"{path}\TexView2\Pal2PacE.exe", f"{dir_path}\\{file_name[:-4]}.{file_type_from}", f"{dir_path}\\{file_name[:-4]}.{file_type_to}"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                        proc = subprocess.Popen([f"{path}/TexView2/Pal2PacE.exe", f"{dir_path}/{file_name[:-4]}.{file_type_from}", f"{dir_path}/{file_name[:-4]}.{file_type_to}"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                        # print(f"{dir_path}/{file_name[:-4]}.{file_type_from}")
+                        # print(f"{dir_path}/{file_name[:-4]}.{file_type_to}")
                         processes.append(proc)
 
                         # state = proc.communicate()
