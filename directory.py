@@ -10,8 +10,9 @@ def grab_directory():
     file_path = filedialog.askdirectory()
 
     if (file_path == ""):
+        print("Path not entered, aborting")
         # file_path = grab_directory()
-        # gui.prompt_user("Oops!", "Looks like you didn't select a directory.")
-        sys.exit()
-
-    return file_path
+        # gui.prompt_user("Oops!", "You didn't select a directory.")
+        # sys.exit()
+    else:
+        return file_path
