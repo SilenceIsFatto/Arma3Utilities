@@ -4,26 +4,12 @@ import PySimpleGUI as gui
 import gui_settings
 import gui_layouts
 import gui_debug
+import gui_theme
+import gui_prompt_user
 
 import directory
 
 import os
-
-def set_theme(theme):
-
-    gui.theme(theme)
-
-    print(f"Theme was set to {theme}")
-
-def prompt_debug():
-
-    gui.show_debugger_window(location=(10,0))
-
-    gui.Print('Re-routing data to this console', do_not_reroute_stdout=False)
-
-    print = gui.Print
-
-set_theme("Dark")
 
 def window():
 
@@ -31,26 +17,16 @@ def window():
     
     layout = config.layout_base()
 
-    window = gui.Window("Arma 3 Utilities", layout, size=(500, 350), element_justification='c', finalize=True)
+    window = gui.Window("Arma 3 Utilities", layout, icon=f"{os.getcwd()}/crow_1.ico", size=(500, 350), element_justification='c', finalize=True)
 
-    # window.bring_to_front()
-
-    #size=(400,400)
+    window.set_title("Arma 3 Utilities")
 
     return window
-
-# def handle_event(event):
-#     match event:
-#         case "":
 
 def event_handlers(window_a):
 
     while True:
         window, event, values = gui.read_all_windows()
-
-        # print(window)
-        # End program if user closes window or
-        # presses the OK button
 
         if (window == window_a and event == gui.WIN_CLOSED):
             break
@@ -61,12 +37,10 @@ def event_handlers(window_a):
 
             case "paa_to_png":
                 import conversion
-                # threads.start_thread(conversion.convert_textures("paa", "png"), 10)
                 window.perform_long_operation(lambda : conversion.convert_textures("paa", "png"), "converted_textures")
 
             case "png_to_paa":
                 import conversion
-                # threads.start_thread(conversion.convert_textures("paa", "png"), 10)
                 window.perform_long_operation(lambda : conversion.convert_textures("png", "paa"), "converted_textures")
 
             case "pack_pbo":
@@ -78,72 +52,71 @@ def event_handlers(window_a):
 
                 out_path = directory.grab_directory()
 
-                x = {
-                    "in_path": in_path,
-                    "out_path": out_path,
-                }
+                if ((in_path != None) and (out_path != None)):
 
-                gui_settings.save_to_json(x, "packer")
+                    x = {
+                        "in_path": in_path,
+                        "out_path": out_path,
+                    }
+
+                    gui_settings.save_to_json(x, "packer")
 
             case "settings":
                 gui_settings.window_settings_init()
                 print(str(window))
 
             case "path_to_tools":
-                select_tools()
+                gui_settings.select_tools()
 
             case "open_debug_window":
                 gui_debug.window_debug()
 
-        # if event == "Close":
-        #     break
+            case "window_theme":
+                theme = values['window_themes']
+                # print(theme)
+                x = {
+                    "theme": theme,
+                }
 
-        # if event == "paa_to_png":
-        #     import conversion
-        #     # threads.start_thread(conversion.convert_textures("paa", "png"), 10)
-        #     window.perform_long_operation(lambda : conversion.convert_textures("paa", "png"), "Converted Textures")
+                gui_settings.update_to_json(x, "settings")
 
-        # if event == "png_to_paa":
-        #     import conversion
-        #     # threads.start_thread(conversion.convert_textures("png", "paa"), 10)
-        #     window.perform_long_operation(lambda : conversion.convert_textures("png", "paa"), "Converted Textures")
-
-        # if event == "settings":
-        #     gui_settings.select_tools()
-
-        # if event == '-CPI-':
-        #     try:
-        #         data = prompt_user_return("Select clicks per interval")
-                
-        #         if (data.isdigit() == False):
-        #             prompt_user("An error has occured.", f"The input given is not a number.")
-        #             break
-
-        #         print(data)
-        #         window['-TEXT-'].update(data, font=('Arial Bold', 10))
-        #         window['-SL-'].update(data)
-        #     except:
-        #         prompt_user("An error has occured.", f"Event {event} went wrong.")
-        #         print("An error has occured with popup text")
-
-#prompt_user("An error has occured.", f"fat")
+                gui_prompt_user.prompt_user("Info", "These settings will be applied when the program next starts.")
 
 def window_init():
 
     if (os.path.isfile(f"{os.getcwd()}/settings.json")):
         print("Settings file found")
+
+        json = gui_settings.read_from_json("settings")
+
+        if "theme" in json:
+            print("Theme found")
+            gui_theme.change(json["theme"])
+        else:
+            print("Theme not found, using default")
+            
+            x = {
+                "theme": "Dark",
+            }
+
+            gui_settings.update_to_json(x, "settings")
+
+        print("Settings file found")
     else:
+
+        gui_theme.change("Dark")
+
+        x = {
+            "init": "active",
+        }
+
+        gui_settings.save_to_json(x, "settings")
+
         gui_settings.select_tools()
 
-    # prompt_debug()
-
-    window_b = gui_debug.window_debug()
+    # window_b = gui_debug.window_debug()
 
     window_a = window()
     event_handlers(window_a)
 
-# threads.start_thread(window_init, 1)
-
 window_init()
-
-#window.close()
