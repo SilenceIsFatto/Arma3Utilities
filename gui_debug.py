@@ -10,3 +10,5 @@ def window_debug():
     # print(layout)
 
     window_debug = gui.Window("Debug Window", layout_debug, size=(600, 300), element_justification='c', finalize=True)
+
+    # window_debug.disappear()

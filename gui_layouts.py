@@ -1,5 +1,7 @@
 import PySimpleGUI as gui
 
+import gui_settings
+
 class Layouts:
 
     def __init__(self):
@@ -16,12 +18,33 @@ class Layouts:
 
     def layout_settings(self):
 
+        themes = [
+            "Dark",
+            "DarkAmber",
+            "DarkGrey8",
+            "Dark2",
+            "SystemDefault",
+            "Reddit",
+            "Black"
+        ]
+
+        json = gui_settings.read_from_json("settings")
+
+        if "theme" in json:
+            cur_theme = json["theme"]
+        else:
+            cur_theme = themes[0]
+
         layout = [
             [gui.Text("Settings")],
 
             [gui.Button("Path To Arma 3 Tools", pad=(0,10), key="path_to_tools")],
 
             [gui.Button("Open Debug Window", pad=(0,10), key="open_debug_window")],
+
+            [gui.Combo(themes, cur_theme, font=('Arial Bold', 10), enable_events=True, readonly=True, key='window_themes')],
+
+            [gui.Button("Set Theme", pad=(0,10), key="window_theme")],
         ]
 
         return layout
