@@ -5,25 +5,21 @@ import directory
 
 import gui_layouts
 import gui_debug
-import gui_prompt_user
+import gui_prompt_user as prompt
 
-def window_settings():
+def window():
 
     config = gui_layouts.Layouts()
     
-    layout_setting = config.layout_settings()
+    layout = config.layout_settings()
 
-    window_setting = gui.Window("Arma 3 Utility Settings", layout_setting, icon=f"{os.getcwd()}/crow_1.ico", size=(400, 300), element_justification='c', finalize=True)
+    window = gui.Window("Arma 3 Utility Settings", layout, icon=f"{os.getcwd()}/crow_1.ico", size=(400, 300), element_justification='c', finalize=True)
 
     # window.bring_to_front()
 
     #size=(400,400)
 
-    return window_setting
-
-def window_settings_init():
-
-    window_c = window_settings()
+    return window
 
 def save_to_json(data, file_name):
 
@@ -35,6 +31,14 @@ def save_to_json(data, file_name):
 def read_from_json(file_name):
     with open(f'{os.getcwd()}/{file_name}.json', 'r') as file:
         y = json.load(file)
+
+    return y
+
+def read_from_json_return(file_name, data):
+    with open(f'{os.getcwd()}/{file_name}.json', 'r') as file:
+        x = json.load(file)
+
+    y = x[data]
 
     return y
 
@@ -52,10 +56,12 @@ def update_to_json(data, file_name):
         save_to_json(y, file_name)
 
     except:
-        print("Something went wrong with initialization. Some things may still work.")
+        # print("Something went wrong with initialization. Some things may still work.")
+        prompt.user_error("Error", "Something went wrong whilst saving settings. Some things may still work. Try creating an empty packer.json file")
+        
 
 def select_tools():
-    gui_prompt_user.prompt_user("Info", "Please select your Arma 3 Tools root directory.")
+    prompt.user("Info", "Please select your Arma 3 Tools root directory.")
 
     path = directory.grab_directory()
 

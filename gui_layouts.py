@@ -48,6 +48,27 @@ class Layouts:
         ]
 
         return layout
+
+    def layout_packer_settings(self):
+
+        # json = gui_settings.read_from_json("settings")
+
+        # if "theme" in json:
+        #     cur_theme = json["theme"]
+        # else:
+        #     cur_theme = themes[0]
+
+        layout = [
+            [gui.Text("Packer Settings")],
+
+            [gui.Button("Input Directory", pad=(0,10), key="packer_input")],
+
+            [gui.Button("Output Directory", pad=(0,10), key="packer_output")],
+
+            [gui.Button("Key Directory", pad=(0,10), key="key_input")],
+        ]
+
+        return layout
     
     def layout_base(self):
 

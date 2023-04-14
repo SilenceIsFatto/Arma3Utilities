@@ -5,6 +5,7 @@ import json
 
 import directory
 import gui_settings
+import gui_prompt_user as prompt
 
 tools = gui_settings.read_from_json("settings")
 
@@ -65,7 +66,8 @@ Subfolder: {subfolder[3]}\n----------------------------------------------"""
 
                     except:
 
-                        print("Error: Image Conversion Failed")
+                        # print("Error: Image Conversion Failed")
+                        prompt.user_error("Error", "Image Conversion Failed")
 
     print(f"Finished converting. Conversion type was {file_type_from} to {file_type_to}")
     # os.system('cls||clear')

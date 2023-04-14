@@ -5,7 +5,9 @@ import gui_settings
 import gui_layouts
 import gui_debug
 import gui_theme
-import gui_prompt_user
+import gui_prompt_user as prompt
+import gui_prompt_user_return as prompt_return
+import gui_packer
 
 import directory
 
@@ -35,6 +37,8 @@ def event_handlers(window_a):
             case gui.WIN_CLOSED:
                 window.close()
 
+            #IMAGE TOOLS#
+
             case "paa_to_png":
                 import conversion
                 window.perform_long_operation(lambda : conversion.convert_textures("paa", "png"), "converted_textures")
@@ -43,33 +47,72 @@ def event_handlers(window_a):
                 import conversion
                 window.perform_long_operation(lambda : conversion.convert_textures("png", "paa"), "converted_textures")
 
+            ##IMAGE TOOLS##
+
+            #PBO TOOLS#
+
             case "pack_pbo":
                 import packer
                 window.perform_long_operation(lambda : packer.pack_all_pbo(), "packed_pbo")
 
             case "pack_pbo_settings":
-                in_path = directory.grab_directory()
+                gui_packer.window()
+                # in_path = directory.grab_directory()
 
-                out_path = directory.grab_directory()
+                # out_path = directory.grab_directory()
 
-                if ((in_path != None) and (out_path != None)):
+                # if ((in_path != None) and (out_path != None)):
 
-                    x = {
-                        "in_path": in_path,
-                        "out_path": out_path,
-                    }
+                #     x = {
+                #         "in_path": in_path,
+                #         "out_path": out_path,
+                #     }
 
-                    gui_settings.save_to_json(x, "packer")
+                #     gui_settings.save_to_json(x, "packer")
+
+            case "packer_input":
+                data = prompt_return.user_return_folder("Please select an input directory")
+                print(data)
+
+                x = {
+                    "in_path": data,
+                }
+
+                gui_settings.update_to_json(x, "packer")
+
+            case "packer_output":
+                data = prompt_return.user_return_folder("Please select an output directory")
+                print(data)
+            
+                x = {
+                    "out_path": data,
+                }
+
+                gui_settings.update_to_json(x, "packer")
+                
+            case "key_input":
+                data = prompt_return.user_return_file("Please select a key")
+                print(data)
+
+                x = {
+                    "key_path": data,
+                }
+
+                gui_settings.update_to_json(x, "packer")
+
+            ##PBO TOOLS##
+
+            #SETTINGS#
 
             case "settings":
-                gui_settings.window_settings_init()
+                gui_settings.window()
                 print(str(window))
 
             case "path_to_tools":
                 gui_settings.select_tools()
 
             case "open_debug_window":
-                gui_debug.window_debug()
+                gui_debug.window()
 
             case "window_theme":
                 theme = values['window_themes']
@@ -80,7 +123,9 @@ def event_handlers(window_a):
 
                 gui_settings.update_to_json(x, "settings")
 
-                gui_prompt_user.prompt_user("Info", "These settings will be applied when the program next starts.")
+                prompt.user("Info", "These settings will be applied when the program next starts.")
+
+            ##SETTINGS##
 
 def window_init():
 
