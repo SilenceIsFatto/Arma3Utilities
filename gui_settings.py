@@ -6,6 +6,7 @@ import directory
 import gui_layouts
 import gui_debug
 import gui_prompt_user as prompt
+import gui_prompt_user_return as prompt_return
 
 def window():
 
@@ -69,14 +70,22 @@ def update_to_json(data, file_name):
         
 
 def select_tools():
-    prompt.user("Info", "Please select your Arma 3 Tools root directory.")
+    # prompt.user("Info", "Please select your Arma 3 Tools root directory.")
 
-    path = directory.grab_directory()
+    # path = directory.grab_directory()
 
-    if (path != None):
+    # if (os.path.isfile(f"{os.getcwd()}/settings.json")):
+    #     tools = read_from_json("settings")
+    #     tools_path = tools["tools"]
+    # else:
+    #     tools_path = ""
 
-        x = {
-            "tools": path,
-        }
+    path = prompt_return.user_return_folder("Please select your Arma 3 Tools directory", default_path="")
 
-        update_to_json(x, "settings")
+    # if (path != None):
+
+    x = {
+        "tools": path,
+    }
+
+    update_to_json(x, "settings")

@@ -15,6 +15,8 @@ import os
 
 def window():
 
+    gui_debug.window()
+
     config = gui_layouts.Layouts()
     
     layout = config.layout_base()
@@ -22,6 +24,7 @@ def window():
     window = gui.Window("Arma 3 Utilities", layout, icon=f"{os.getcwd()}/crow_1.ico", size=(500, 350), element_justification='c', finalize=True)
 
     window.set_title("Arma 3 Utilities")
+
 
     return window
 
@@ -76,7 +79,12 @@ def event_handlers(window_a):
                 #     gui_settings.save_to_json(x, "packer")
 
             case "packer_input":
-                data = prompt_return.user_return_folder("Please select an input directory")
+                if (os.path.isfile(f"{os.getcwd()}/packer.json")):
+                    in_path = gui_settings.read_from_json_return("packer", "in_path")
+                else:
+                    out_path = ""
+
+                data = prompt_return.user_return_folder("Please select an input directory", default_path=in_path)
                 print(data)
 
                 x = {
@@ -86,7 +94,12 @@ def event_handlers(window_a):
                 gui_settings.update_to_json(x, "packer")
 
             case "packer_output":
-                data = prompt_return.user_return_folder("Please select an output directory")
+                if (os.path.isfile(f"{os.getcwd()}/packer.json")):
+                    out_path = gui_settings.read_from_json_return("packer", "out_path")
+                else:
+                    out_path = ""
+
+                data = prompt_return.user_return_folder("Please select an output directory", default_path=out_path)
                 print(data)
             
                 x = {
@@ -96,7 +109,13 @@ def event_handlers(window_a):
                 gui_settings.update_to_json(x, "packer")
                 
             case "key_input":
-                data = prompt_return.user_return_file("Please select a key")
+                if (os.path.isfile(f"{os.getcwd()}/packer.json")):
+                    key_path = gui_settings.read_from_json_return("packer", "key_path")
+                else:
+                    tools = gui_settings.read_from_json("settings")
+                    key_path = tools["tools"]
+
+                data = prompt_return.user_return_file("Please select a key", default_path=key_path)
                 print(data)
 
                 x = {
