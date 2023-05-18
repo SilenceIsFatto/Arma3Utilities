@@ -35,8 +35,16 @@ def read_from_json(file_name):
     return y
 
 def read_from_json_return(file_name, data):
-    with open(f'{os.getcwd()}/{file_name}.json', 'r') as file:
-        x = json.load(file)
+    print(file_name)
+    if ("/" in file_name):
+        
+        with open(f'{file_name}', 'r') as file:
+            x = json.load(file)
+
+    else:
+
+        with open(f'{os.getcwd()}/{file_name}.json', 'r') as file:
+            x = json.load(file)
 
     y = x[data]
 

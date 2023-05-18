@@ -66,6 +66,10 @@ class Layouts:
             [gui.Button("Output Directory", pad=(0,10), key="packer_output")],
 
             [gui.Button("Key Directory", pad=(0,10), key="key_input")],
+
+            [gui.Button("Save", pad=(0,10), key="packer_settings_save")],
+
+            [gui.Button("Load", pad=(0,0), key="packer_settings_load")],
         ]
 
         return layout

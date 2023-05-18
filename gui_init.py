@@ -53,6 +53,11 @@ def event_handlers(window_a):
 
             case "pack_pbo":
                 import packer
+                # import conversion
+                # convert = gui_settings.read_from_json_return("packer", "convert_textures")
+                # if (convert):
+                #     conversion.convert_textures(file_type_from, file_type_to, in_path)
+
                 window.perform_long_operation(lambda : packer.pack_all_pbo(), "packed_pbo")
 
             case "pack_pbo_settings":
@@ -99,6 +104,53 @@ def event_handlers(window_a):
                 }
 
                 gui_settings.update_to_json(x, "packer")
+
+            case "packer_settings_save":
+
+                if (os.path.isfile(f"{os.getcwd()}/packer.json")):
+                    save_name = prompt_return.user_return("Enter a save name")
+
+                    in_path = gui_settings.read_from_json_return("packer", "in_path")
+
+                    out_path = gui_settings.read_from_json_return("packer", "out_path")
+
+                    key_path = gui_settings.read_from_json_return("packer", "key_path")
+
+                    x = {
+                        # "packer_template": data,
+                        "in_path": in_path,
+                        "out_path": out_path,
+                        "key_path": key_path,
+                    }
+
+                    gui_settings.save_to_json(x, save_name)
+                else:
+                    prompt.user_error("Error", "Can't find a packer.json file. Try setting some directories first?")
+
+            case "packer_settings_load":
+                save_name = prompt_return.user_return_file("Select a save file")
+
+                if (os.path.isfile(f"{save_name}")):
+                    in_path = gui_settings.read_from_json_return(save_name, "in_path")
+
+                    out_path = gui_settings.read_from_json_return(save_name, "out_path")
+
+                    key_path = gui_settings.read_from_json_return(save_name, "key_path")
+
+                    x = {
+                        # "packer_template": data,
+                        "in_path": in_path,
+                        "out_path": out_path,
+                        "key_path": key_path,
+                    }
+
+                    gui_settings.save_to_json(x, "packer")
+
+                    print(in_path)
+                    print(out_path)
+                    print(key_path)
+                else:
+                    prompt.user_error("Error", f"Can't find {save_name}.json")
 
             ##PBO TOOLS##
 
