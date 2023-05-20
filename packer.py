@@ -21,9 +21,9 @@ def pack_pbo(path, path_in, path_out, path_key, folder):
 
         # print(f"{path_in}/{folder} was a folder, packing\n\n\n\n\n")
         subprocess.run([f"{path}\AddonBuilder\AddonBuilder.exe", f"{path_in}/{folder}", path_out, "-clear", "-temp", "-binarizeNoLogs", f"-include={os.getcwd()}/include.txt", f"-sign={path_key}"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT) # use the include.txt
-        print(f"Finished packing file {folder} at {path_in}/{folder} to {path_out}")
+        print(f"Finished packing file {folder} at {path_in}/{folder} to {path_out}\n\n")
     else:
-        print(f"{path_in}/{folder} was not a folder, not packing\n\n\n\n\n")
+        print(f"{path_in}/{folder} was not a folder, not packing")
 
     # if (len(processes) >= 10):
     #     print("Too many processes, throttling")

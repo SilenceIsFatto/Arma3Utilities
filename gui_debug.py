@@ -7,8 +7,6 @@ def window():
 
     layout = config.layout_console()
 
-    # print(layout)
-
     window = gui.Window("Debug Window", layout, size=(600, 300), element_justification='c', finalize=True)
 
     # window.disappear()

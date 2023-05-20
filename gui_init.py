@@ -85,7 +85,7 @@ def event_handlers(window_a):
                     out_path = ""
 
                 data = prompt_return.user_return_folder("Please select an input directory", default_path=in_path)
-                print(data)
+                # print(data)
 
                 x = {
                     "in_path": data,
@@ -100,7 +100,7 @@ def event_handlers(window_a):
                     out_path = ""
 
                 data = prompt_return.user_return_folder("Please select an output directory", default_path=out_path)
-                print(data)
+                # print(data)
             
                 x = {
                     "out_path": data,
@@ -116,7 +116,7 @@ def event_handlers(window_a):
                     key_path = tools["tools"]
 
                 data = prompt_return.user_return_file("Please select a key", default_path=key_path)
-                print(data)
+                # print(data)
 
                 x = {
                     "key_path": data,
@@ -165,9 +165,9 @@ def event_handlers(window_a):
 
                     gui_settings.save_to_json(x, "packer")
 
-                    print(in_path)
-                    print(out_path)
-                    print(key_path)
+                    # print(in_path)
+                    # print(out_path)
+                    # print(key_path)
                 else:
                     prompt.user_error("Error", f"Can't find {save_name}.json")
 
@@ -177,7 +177,7 @@ def event_handlers(window_a):
 
             case "settings":
                 gui_settings.window()
-                print(str(window))
+                # print(str(window))
 
             case "path_to_tools":
                 gui_settings.select_tools()
@@ -216,8 +216,6 @@ def window_init():
             }
 
             gui_settings.update_to_json(x, "settings")
-
-        print("Settings file found")
     else:
 
         gui_theme.change("Dark")

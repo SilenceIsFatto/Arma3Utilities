@@ -36,7 +36,7 @@ def read_from_json(file_name):
     return y
 
 def read_from_json_return(file_name, data):
-    print(file_name)
+    # print(file_name)
     if ("/" in file_name):
         
         with open(f'{file_name}', 'r') as file:
