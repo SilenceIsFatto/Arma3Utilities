@@ -31,7 +31,7 @@ def pack_pbo(path, path_in, path_out, path_key, folder):
     #     for i in range(5):
     #         processes.pop()
 
-def pack_all_pbo():
+def pack_all_pbo(convert=False):
 
     tools = gui_settings.read_from_json_return("settings", "tools")
 
@@ -66,7 +66,7 @@ def pack_all_pbo():
     threads = []
 
     # convert = gui_settings.read_from_json_return("packer", "convert_textures")
-    convert = True
+    # convert = True
     if (convert):
         conversion.convert_textures("png", "paa", in_path=in_path)
 

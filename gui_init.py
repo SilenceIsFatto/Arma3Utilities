@@ -63,6 +63,15 @@ def event_handlers(window_a):
 
                 window.perform_long_operation(lambda : packer.pack_all_pbo(), "packed_pbo")
 
+            case "pack_pbo_textures":
+                import packer
+                # import conversion
+                # convert = gui_settings.read_from_json_return("packer", "convert_textures")
+                # if (convert):
+                #     conversion.convert_textures(file_type_from, file_type_to, in_path)
+
+                window.perform_long_operation(lambda : packer.pack_all_pbo(convert=True), "packed_pbo_textures")
+
             case "pack_pbo_settings":
                 gui_packer.window()
                 # in_path = directory.grab_directory()
