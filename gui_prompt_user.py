@@ -1,5 +1,9 @@
 import PySimpleGUI as gui
 
-def prompt_user(title, message):
+def user(title, message):
 
     gui.popup(title, message)
+
+def user_error(title, message):
+
+    gui.popup_error(title, message)

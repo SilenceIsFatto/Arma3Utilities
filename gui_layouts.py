@@ -48,6 +48,31 @@ class Layouts:
         ]
 
         return layout
+
+    def layout_packer_settings(self):
+
+        # json = gui_settings.read_from_json("settings")
+
+        # if "theme" in json:
+        #     cur_theme = json["theme"]
+        # else:
+        #     cur_theme = themes[0]
+
+        layout = [
+            [gui.Text("Packer Settings")],
+
+            [gui.Button("Input Directory", pad=(0,10), key="packer_input")],
+
+            [gui.Button("Output Directory", pad=(0,10), key="packer_output")],
+
+            [gui.Button("Key Directory", pad=(0,10), key="key_input")],
+
+            [gui.Button("Save", pad=(0,10), key="packer_settings_save")],
+
+            [gui.Button("Load", pad=(0,0), key="packer_settings_load")],
+        ]
+
+        return layout
     
     def layout_base(self):
 
@@ -68,9 +93,11 @@ class Layouts:
             
             [gui.Button("PNG > PAA Mass Conversion", pad=(0,0), key="png_to_paa")],
 
-            [gui.Text("PBO Tools", pad=(0,20))],
+            [gui.Text("PBO Tools", pad=(0,10))],
 
             [gui.Button("Pack Directory", pad=(0,0), key="pack_pbo")],
+
+            [gui.Button("Convert/Pack Directory", pad=(0,0), key="pack_pbo_textures")],
             
             [gui.Button("Directory Settings", pad=(0,0), key="pack_pbo_settings")],
 
