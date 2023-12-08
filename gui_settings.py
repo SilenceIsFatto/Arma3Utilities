@@ -1,12 +1,12 @@
 import PySimpleGUI as gui
 import json
 import os
-import directory
 
 import gui_layouts
 import gui_debug
 import gui_prompt_user as prompt
 import gui_prompt_user_return as prompt_return
+import gui_utility
 
 def window():
 
@@ -47,6 +47,9 @@ def read_from_json_return(file_name, data):
         with open(f'{os.getcwd()}/{file_name}.json', 'r') as file:
             x = json.load(file)
 
+    if (data not in x):
+        x.update({data: ""})
+
     y = x[data]
 
     return y
@@ -60,7 +63,7 @@ def update_to_json(data, file_name):
 
         y.update(data)
         
-        print(y)
+        # print(y)
 
         save_to_json(y, file_name)
 
@@ -69,7 +72,7 @@ def update_to_json(data, file_name):
         prompt.user_error("Error", "Something went wrong whilst saving settings. Some things may still work. Try creating an empty packer.json file")
         
 
-def select_tools():
+def select_tools(startup=False):
     # prompt.user("Info", "Please select your Arma 3 Tools root directory.")
 
     # path = directory.grab_directory()
@@ -80,7 +83,12 @@ def select_tools():
     # else:
     #     tools_path = ""
 
-    path = prompt_return.user_return_folder("Please select your Arma 3 Tools directory", default_path="")
+    if startup:
+        file_required = True
+    else:
+        file_required = startup # might aswell, incase I change it
+
+    path = prompt_return.user_return_folder("Please select your Arma 3 Tools directory", default_path="", file_required=file_required)
 
     # if (path != None):
 

@@ -5,7 +5,8 @@ import gui_settings
 class Layouts:
 
     def __init__(self):
-        print("Running")
+        # print("Running")
+        pass
 
     def layout_console(self):
         frame_layout = [[gui.Multiline("", size=(80, 20), autoscroll=True, reroute_stdout=True, reroute_stderr=True, key='console_output')]]

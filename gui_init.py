@@ -8,8 +8,7 @@ import gui_theme
 import gui_prompt_user as prompt
 import gui_prompt_user_return as prompt_return
 import gui_packer
-
-import directory
+import gui_utility
 
 import os
 
@@ -24,7 +23,6 @@ def window():
     window = gui.Window("Arma 3 Utilities", layout, icon=f"{os.getcwd()}/crow_1.ico", size=(500, 350), element_justification='c', finalize=True)
 
     window.set_title("Arma 3 Utilities")
-
 
     return window
 
@@ -209,28 +207,41 @@ def event_handlers(window_a):
 
 def window_init():
 
-    if (os.path.isfile(f"{os.getcwd()}/settings.json")):
-        print("Settings file found")
+    settings_path = f"{os.getcwd()}/settings.json"
 
-        json = gui_settings.read_from_json("settings")
+    settings_exist = gui_utility.verify_path(settings_path)
 
-        if "theme" in json:
-            print("Theme found")
-            gui_theme.change(json["theme"])
+    if (settings_exist):
+        # print("Settings file found")
+
+        theme = gui_settings.read_from_json_return("settings", "theme")
+
+        tools = gui_settings.read_from_json_return("settings", "tools")
+
+        if tools == "":
+            # print("Settings file exists, but has no tools entry")
+            gui_settings.select_tools(startup=True)
+
+        if theme != "":
+            # print("Theme found")
+            gui_theme.change(theme)
         else:
-            print("Theme not found, using default")
+            # print("Theme not found, using default")
             
             x = {
                 "theme": "Dark",
             }
 
             gui_settings.update_to_json(x, "settings")
+
+            gui_theme.change("Dark")
     else:
 
         gui_theme.change("Dark")
 
         x = {
             "init": "active",
+            "theme": "Dark"
         }
 
         gui_settings.save_to_json(x, "settings")
