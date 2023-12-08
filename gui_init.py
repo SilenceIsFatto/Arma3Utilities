@@ -89,7 +89,7 @@ def event_handlers(window_a):
                 if (os.path.isfile(f"{os.getcwd()}/packer.json")):
                     in_path = gui_settings.read_from_json_return("packer", "in_path")
                 else:
-                    out_path = ""
+                    in_path = ""
 
                 data = prompt_return.user_return_folder("Please select an input directory", default_path=in_path)
                 # print(data)
@@ -99,6 +99,8 @@ def event_handlers(window_a):
                 }
 
                 gui_settings.update_to_json(x, "packer")
+
+                print(f"Set in_path to {data}")
 
             case "packer_output":
                 if (os.path.isfile(f"{os.getcwd()}/packer.json")):
@@ -114,6 +116,8 @@ def event_handlers(window_a):
                 }
 
                 gui_settings.update_to_json(x, "packer")
+
+                print(f"Set out_path to {data}")
                 
             case "key_input":
                 if (os.path.isfile(f"{os.getcwd()}/packer.json")):
@@ -122,7 +126,7 @@ def event_handlers(window_a):
                     tools = gui_settings.read_from_json("settings")
                     key_path = tools["tools"]
 
-                data = prompt_return.user_return_file("Please select a key", default_path=key_path)
+                data = prompt_return.user_return_file("Please select a key", default_path=key_path, file_types=("File", ".biprivatekey"))
                 # print(data)
 
                 x = {
@@ -130,6 +134,8 @@ def event_handlers(window_a):
                 }
 
                 gui_settings.update_to_json(x, "packer")
+
+                print(f"Set key_path to {data}")
 
             case "packer_settings_save":
 
@@ -154,7 +160,7 @@ def event_handlers(window_a):
                     prompt.user_error("Error", "Can't find a packer.json file. Try setting some directories first?")
 
             case "packer_settings_load":
-                save_name = prompt_return.user_return_file("Select a save file")
+                save_name = prompt_return.user_return_file("Select a save file", file_types=("Json Files", ".json"))
 
                 if (os.path.isfile(f"{save_name}")):
                     in_path = gui_settings.read_from_json_return(save_name, "in_path")
@@ -210,6 +216,19 @@ def window_init():
     settings_path = f"{os.getcwd()}/settings.json"
 
     settings_exist = gui_utility.verify_path(settings_path)
+
+    packer_path = f"{os.getcwd()}/packer.json"
+
+    packer_exists = gui_utility.verify_path(packer_path)
+
+    if (packer_exists):
+        pass
+    else:
+        x = {
+            "in_path": "",
+        }
+
+        gui_settings.save_to_json(x, "packer")
 
     if (settings_exist):
         # print("Settings file found")

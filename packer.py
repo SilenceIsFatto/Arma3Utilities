@@ -51,34 +51,32 @@ def pack_all_pbo(convert=False):
         out_path = gui_settings.read_from_json_return("packer", "out_path")
 
         key_path = gui_settings.read_from_json_return("packer", "key_path")
-        
 
-        # path = tools["tools"]
-        # path_in = in_path["in_path"]
-        # path_out = out_path["out_path"]
-        # path_key = key_path["key_path"]
+        if (in_path == "" or out_path == "" or key_path == ""):
+            print("Your directory settings exist, but seem to be corrupt. Try resetting the paths.")
+        else:
 
-        directories = os.walk(f"{in_path}")
-        dirpath, dirnames, filenames = next(directories)
+            directories = os.walk(f"{in_path}")
+            dirpath, dirnames, filenames = next(directories)
 
-        threads = []
+            threads = []
 
-        # convert = gui_settings.read_from_json_return("packer", "convert_textures")
-        # convert = True
-        if (convert):
-            conversion.convert_textures("png", "paa", in_path=in_path)
+            # convert = gui_settings.read_from_json_return("packer", "convert_textures")
+            # convert = True
+            if (convert):
+                conversion.convert_textures("png", "paa", in_path=in_path)
 
-        for folder in os.listdir(in_path):
+            for folder in os.listdir(in_path):
 
-            packer_thread = Thread(target=pack_pbo,args=(tools, in_path, out_path, key_path, folder))
-            threads.append(packer_thread)
-            # packer_thread.start()
+                packer_thread = Thread(target=pack_pbo,args=(tools, in_path, out_path, key_path, folder))
+                threads.append(packer_thread)
+                # packer_thread.start()
 
-        gui_threads.start_threads(threads)
+            gui_threads.start_threads(threads)
 
-        time = gui_utility.get_time()
-        
-        print(f"\nFinished Packing {len(threads) - 1} Files - [{time}]")
+            time = gui_utility.get_time()
+            
+            print(f"\nFinished Packing Folders - [{time}]")
     else:
         # gui_prompt_user.user_error(message="You haven't setup your directory settings yet.")
         print("You haven't setup your directory settings yet.")

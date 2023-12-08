@@ -1,9 +1,17 @@
 import  tkinter
 from tkinter import filedialog
 
+import PySimpleGUI as gui
+
 import gui_prompt_user
 import gui_utility
 import os
+
+def user_return(message):
+
+    data = gui.popup_get_text(message)
+
+    return data
 
 def user_return_file(message, default_path="default", file_required=False, file_types=(("All Files", ".*"))):
 
